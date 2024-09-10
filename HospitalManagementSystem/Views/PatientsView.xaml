@@ -1,0 +1,148 @@
+﻿<UserControl
+    x:Class="HospitalManagementSystem.Views.PatientsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:HospitalManagementSystem.Views.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:HospitalManagementSystem.Helpers"
+    xmlns:local="clr-namespace:HospitalManagementSystem.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:PageSizeColorConverter x:Key="PaginationBackgroundConverter" />
+        <helpers:PageTextColorConverter x:Key="PaginationForegroundConverter" />
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisiblity" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox
+            Grid.Column="0"
+            Width="250"
+            Height="40"
+            Margin="100,75,0,0"
+            Padding="10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Search patients..."
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel
+            Grid.Column="1"
+            Margin="0,75,100,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Button
+                Width="125"
+                Height="35"
+                Margin="0,0,15,0"
+                Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Export" Foreground="WhiteSmoke" />
+                    <materialDesign:PackIcon
+                        Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        Foreground="WhiteSmoke"
+                        Kind="FileExport" />
+                </StackPanel>
+            </Button>
+            <Button
+                Width="125"
+                Height="35"
+                Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="New" Foreground="WhiteSmoke" />
+                    <materialDesign:PackIcon
+                        Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        Foreground="WhiteSmoke"
+                        Kind="Plus" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Margin="100,30,100,0">
+            <DataGrid
+                x:Name="patientsDataGrid"
+                Grid.Row="0"
+                AutoGenerateColumns="False"
+                Background="#FAFAFA"
+                IsReadOnly="True"
+                ItemsSource="{Binding Patients}"
+                SelectedItem="{Binding SelectedPatient}">
+                <DataGrid.InputBindings>
+                    <MouseBinding Command="{Binding ShowDetailsCommand}" Gesture="LeftDoubleClick" />
+                </DataGrid.InputBindings>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding EditCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Foreground="#c79d20" Kind="Pencil" />
+                            </MenuItem.Icon>
+                            <MenuItem.Header>
+                                <Label Content="Edit" Foreground="#c79d20" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding DeleteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Foreground="#a32e45" Kind="TrashCan" />
+                            </MenuItem.Icon>
+                            <MenuItem.Header>
+                                <Label Content="Delete" Foreground="#a32e45" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding Id}"
+                        Header="Patient Id" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding FirstName}"
+                        Header="First name" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding LastName}"
+                        Header="Last name" />
+                    <DataGridTextColumn
+                        Width="200"
+                        Binding="{Binding PhoneNumber}"
+                        Header="Phone number" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding Birthdate, StringFormat='{}{0:dd-MMM-yyyy}'}"
+                        Header="Birthdate" />
+                    <DataGridTextColumn
+                        Width="125"
+                        Binding="{Binding Gender}"
+                        Header="Gender" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+
+        <!--  Pagination  -->
+        <components:DataPager
+            x:Name="pager"
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Margin="0,25,100,25"
+            HorizontalAlignment="Right" />
+    </Grid>
+</UserControl>

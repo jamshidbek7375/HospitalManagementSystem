@@ -1,0 +1,76 @@
+﻿<Window
+    x:Class="HospitalManagementSystem.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:HospitalManagementSystem"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:HospitalManagementSystem.Views"
+    Title="Hospital"
+    Width="800"
+    Height="450"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Grid>
+        <materialDesign:Card>
+            <TabControl
+                materialDesign:ColorZoneAssist.Mode="Standard"
+                materialDesign:ElevationAssist.Elevation="Dp0"
+                Style="{StaticResource MaterialDesignNavigationRailTabControl}">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="24"
+                                                     Height="24"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="Doctor" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Doctors" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <views:DoctorsView />
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Center"
+                                Kind="AccountInjury" />
+                            <TextBlock HorizontalAlignment="Center" Text="Patients" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <views:PatientsView />
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Center"
+                                Kind="BadgeAccount" />
+                            <TextBlock HorizontalAlignment="Center" Text="Specs" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Center"
+                                Kind="CalendarAccount" />
+                            <TextBlock HorizontalAlignment="Center" Text="Visits" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>
